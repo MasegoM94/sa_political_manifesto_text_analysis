@@ -170,6 +170,7 @@ Include the following in your GitHub repository:
 - **app.R**: Contains the complete Shiny app code.
 - **README.md**: This readme file.
 - **Collection_of_Manifestos/**: A folder containing the manifesto files.
+Just a note that the manifesto for the Patriotic Alliance could not be read easily by R and so I had to convert the file into a json file using Document Intelligence studio on Azure (that uses text reading capabilities, explanation avaiable in this medium article: https://medium.com/@masego_m/how-to-use-document-intelligence-studio-and-azure-to-extract-a-json-file-from-a-pdf-643ed2462c0c )
 - **Dependencies**: A script or documentation listing all dependencies and installation instructions.
 
 ## How to Contribute
