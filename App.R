@@ -1,4 +1,3 @@
-
 # Function to check if a package is installed, install it if not, and load it
 install_and_load <- function(package_name) {
   if (!require(package_name, character.only = TRUE)) {
@@ -17,7 +16,37 @@ required_packages <- c(
 
 # Install and load required packages
 sapply(required_packages, install_and_load)
-get_current_file_dir()
+
+
+#
+get_current_file_dir <- function() {
+  if (requireNamespace("rstudioapi", quietly = TRUE) && rstudioapi::isAvailable()) {
+    # In RStudio
+    current_file_path <- rstudioapi::getSourceEditorContext()$path
+  } else if (!is.null(sys.frame(1)$ofile)) {
+    # R script
+    current_file_path <- normalizePath(sys.frame(1)$ofile)
+  } else if (length(commandArgs(trailingOnly = FALSE)) > 0) {
+    # Command line or source
+    args <- commandArgs(trailingOnly = FALSE)
+    script_path <- sub("--file=", "", args[grep("--file=", args)])
+    current_file_path <- normalizePath(script_path)
+  } else if (requireNamespace("rprojroot", quietly = TRUE)) {
+    # R project root
+    root <- rprojroot::find_root(rprojroot::is_rstudio_project)
+    current_file_path <- root
+  } else {
+    stop("Cannot determine the script directory")
+  }
+  
+  current_file_dir <- dirname(current_file_path)
+  return(current_file_dir)
+}
+
+folder_path <-paste0(get_current_file_dir(),"/Collection_of_Manifestos")
+
+
+
 
 # Setting up working directory and paths
 files_in_directory <- list.files("Collection_of_Manifestos")
