@@ -11,17 +11,16 @@ install_and_load <- function(package_name) {
 required_packages <- c(
   "shiny", "bslib", "shinyjs", "tm", "pdftools", 
   "topicmodels", "LDAvis", "wordcloud", "ggplot2", 
-  "tidyverse", "tidytext", "gridExtra", "jsonlite","scales"
+  "tidyverse", "tidytext", "gridExtra", "jsonlite","scales",
+  "rprojroot"
 )
 
 # Install and load required packages
 sapply(required_packages, install_and_load)
-
+get_current_file_dir()
 
 # Setting up working directory and paths
-working_directory <- getwd()
-folder_path <- paste0(working_directory, '/Collection_of_Manifestos')
-files_in_directory <- list.files(path = folder_path)
+files_in_directory <- list.files("Collection_of_Manifestos")
 
 # Define a list of lists for political parties
 political_parties <- {list(
