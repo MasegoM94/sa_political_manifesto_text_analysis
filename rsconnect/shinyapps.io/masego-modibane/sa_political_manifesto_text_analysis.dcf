@@ -1,0 +1,12 @@
+name: sa_political_manifesto_text_analysis
+title: sa_political_manifesto_text_analysis
+username: masego-modibane
+account: masego-modibane
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12054423
+bundleId: 8649542
+url: https://masego-modibane.shinyapps.io/sa_political_manifesto_text_analysis/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

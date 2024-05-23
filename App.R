@@ -1,3 +1,6 @@
+# Set CRAN mirror and install required packages
+options(repos = list(CRAN = "https://cran.rstudio.com"))
+
 # Function to check if a package is installed, install it if not, and load it
 install_and_load <- function(package_name) {
   if (!require(package_name, character.only = TRUE)) {
@@ -8,7 +11,7 @@ install_and_load <- function(package_name) {
 
 # List of required packages
 required_packages <- c(
-  "shiny", "bslib", "shinyjs", "tm", "pdftools", 
+  "shiny", "bslib", "tm", "pdftools", 
   "topicmodels", "LDAvis", "wordcloud", "ggplot2", 
   "tidyverse", "tidytext", "gridExtra", "jsonlite","scales",
   "rprojroot"
