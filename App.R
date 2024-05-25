@@ -11,7 +11,7 @@ install_and_load <- function(package_name) {
 
 # List of required packages
 required_packages <- c(
-  "shiny", "bslib", "tm", "pdftools", 
+  "shiny", "shinyjs","bslib", "tm", "pdftools", 
   "topicmodels", "LDAvis", "wordcloud", "ggplot2", 
   "tidyverse", "tidytext", "gridExtra", "jsonlite","scales",
   "rprojroot"
@@ -214,7 +214,7 @@ createLDAVisualization <- function(corpus, numTopics = 5, termsPerTopic = 10) {
   sparse_dtm <- removeSparseTerms(dtm, 0.999)
   empty_docs <- which(rowSums(as.matrix(sparse_dtm)) == 0)
   filtered_dtm <- if (is_named_integer_0(empty_docs)) sparse_dtm else sparse_dtm[-empty_docs, ]
-  lda_model <- LDA(filtered_dtm, k = numTopics)
+  lda_model <- LDA(filtered_dtm, k = numTopics, control=list(seed=0))
   topics <- terms(lda_model, termsPerTopic)
   posterior_results <- posterior(lda_model)
   theta <- posterior_results$topics
@@ -299,8 +299,8 @@ ui <- fluidPage(
         tabPanel(
           "Analysis",
           fluidRow(
-            column(5,div(h3("Word Cloud"), style = "text-align: center;"), plotOutput("wordcloud", height = 700)),
-            column(7,div(h3("Top Terms per Topic"), style = "text-align: center;"),  plotOutput("top_terms_plot", height = 700))
+            column(5,div(h3("Word Cloud"), style = "text-align: center;"), plotOutput("wordcloud", height = 650,width = 450)),
+            column(7,div(h3("Top Terms per Topic"), style = "text-align: center;"),  plotOutput("top_terms_plot", height = 650))
           )
         ),
         tabPanel("LDA Visualization", visOutput("lda_vis"))
@@ -352,7 +352,7 @@ server <- function(input, output) {
       sparse_dtm <- removeSparseTerms(dtm, 0.999)
       empty_docs <- which(rowSums(as.matrix(sparse_dtm)) == 0)
       filtered_dtm <- if (is_named_integer_0(empty_docs)) sparse_dtm else sparse_dtm[-empty_docs, ]
-      lda_model <- LDA(filtered_dtm, k = input$nTopics)
+      lda_model <- LDA(filtered_dtm, k = input$nTopics, control=list(seed=0))
       topics <- tidy(lda_model)
       plotinput <- topics %>%
         mutate(topic = as.factor(paste0('Topic ', topic))) %>%
